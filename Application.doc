@@ -1,0 +1,42 @@
+Dear Developer
+
+-- Database migrations codes if you are not familiar with EntityFrameWork Core
+
+In  IntradayDashboard.Infrastructure path you can youse these codes => .
+
+    dotnet ef database drop => drop db
+    dotnet ef database create "dbname" => create db
+
+    dotnet ef migrations add InitialCreate -o Data/Migrations => Create migration classes in Data/Migrations folder
+
+    dotnet ef database update ==> Run latest migration and update db.
+
+
+-- If there is a problem related to CORS settings, just open applicaton in browser incognito mode.
+
+
+-- RabbitMq 
+
+  ** Post Messages are named as "{ObjectName}Message"
+  ** Its Consumers Added in StartUp as  services.AddScoped<{ObjectName}Consumer>(); and  
+   in AddMassTransit method  => x.AddConsumers(typeof({ObjectName}Consumer)
+
+  ** Its RequestClients added as x.AddRequestClient<{ObjectName}Message>(); in AddMassTransit Method
+
+  -- Hangfire 
+
+  ** I advice to read here => https://docs.hangfire.io/en/latest/background-processing/configuring-queues.html
+
+    Manage your background task in detail. 
+    If you need to create new queue, configure it in StartUp.cs by giving new queue names... 
+    
+     (*/10 * * * *) ==> every ten min  
+     (30 9 * * *) => every day at 9.30 am 
+     (0 */12 * * *) => every day at 12 am or pm
+ ** See the same templates in recurring jobs / Cron column
+
+  -- Seeding 
+
+  ** In Seed folder in infrastructure you can read from json file by deserializing you can insert what ever you want in the start.
+
+  ** If you need to delete your database and create it again, you can use it by making AppSettings:Seed Enabled true
